@@ -1,4 +1,5 @@
 //@author Alexandro Stedan Dezso Florea
+
 import java.util.Scanner;
 
 public class UT3Problema1 {
@@ -6,7 +7,7 @@ public class UT3Problema1 {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         double[] presiones = new double[20];
-        double tensiones = 0, sistolicaMax = 3, diastolicaMin = 22, tensionPromedioDiastolica = 0, tensionPromedioSistolica = 0;
+        double tensiones = 0, sistolicaMax = 3, diastolicaMin = 22, tensionPromedioDiastolica = 0, tensionPromedioSistolica = 0, tensionCompensadaSiastolica = 0, tensionCompensadaDiastolica = 0 , tensionCompensada = 0;
         int start = 0, i = 0;
         boolean encontrado = false;
 
@@ -53,26 +54,29 @@ public class UT3Problema1 {
                         System.out.println(diastolicaMin);
                         break;
                     case 3:
-                        for (int j = 0; j < presiones.length; j++) {
+                        for (int j = 0; j < presiones.length; j += 2) {
+                            tensionCompensadaSiastolica = tensionCompensadaSiastolica + presiones[j];
+                        }
 
+                        for (int j = 1; j < presiones.length; j += 2) {
+                            tensionCompensadaDiastolica = tensionCompensadaDiastolica + presiones[j];
+                            tensionCompensada = Math.abs(tensionCompensadaSiastolica - (tensionCompensadaDiastolica * 2));
+                            System.out.println(tensionCompensada);
                         }
                         break;
                     case 4:
-                        int b = 0;
-                        int c = 0;
+
                         for (int j = 0; j < presiones.length; j += 2) {
                             tensionPromedioSistolica = tensionPromedioSistolica + presiones[j];
-                            b++;
                         }
-                        
+
                         for (int j = 1; j < presiones.length; j += 2) {
                             tensionPromedioDiastolica = tensionPromedioDiastolica + presiones[j];
-                            c++;
                         }
-                        
+
                         double totalSiastolica = tensionPromedioSistolica / (i / 2);
                         double totalDiastolica = tensionPromedioDiastolica / (i / 2);
-                        
+
                         System.out.printf("Promedio Siastólica %.2f y Diastólica %.2f \n", totalSiastolica, totalDiastolica);
                         break;
                     case 5:
