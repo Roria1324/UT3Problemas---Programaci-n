@@ -7,7 +7,7 @@ public class UT3Problema1 {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         double[] presiones = new double[20];
-        double tensiones = 0, sistolicaMax = 3, diastolicaMin = 22, tensionPromedioDiastolica = 0, tensionPromedioSistolica = 0, tensionCompensadaSiastolica = 0, tensionCompensadaDiastolica = 0 , tensionCompensada = 0;
+        double sistolica, diastolica, sistolicaMax = 3, diastolicaMin = 22, tensionPromedioDiastolica = 0, tensionPromedioSistolica = 0, tensionCompensadaSiastolica = 0, tensionCompensadaDiastolica = 0 , tensionCompensada = 0;
         int start = 0, i = 0;
         boolean encontrado = false;
 
@@ -15,15 +15,50 @@ public class UT3Problema1 {
         while (i < presiones.length) {
             if (!input.hasNextDouble()) {
                 input.next();
-
-            } else if ((tensiones = input.nextDouble()) >= 3 && tensiones <= 22) {
-                presiones[i] = tensiones;
-                i++;
+                continue;
             }
-            if (tensiones == 0) {
+            sistolica = input.nextDouble();
+
+            if (sistolica == 0 && i < 4){
+                System.out.println("Debes de introducir minimo 2 parejas");
+                continue;
+            }else if (sistolica == 0 && i >= 4){
                 break;
             }
+
+            if (sistolica < 3 || sistolica > 22){
+                System.out.println("Debe de estar en el rango de 3 y 22");
+                continue;
+            }
+
+            if (!input.hasNextDouble()) {
+                input.next();
+                continue;
+            }
+            diastolica = input.nextDouble();
+
+            if (diastolica == 0 && i < 4){
+                System.out.println("Debes de introducir minimo 2 parejas");
+                continue;
+            }else if (diastolica == 0 && i >= 4){
+                break;
+            }
+
+            if (diastolica < 3 || diastolica > 22){
+                System.out.println("Debe de estar en el rango de 3 y 22");
+                continue;
+            }
+
+            if (sistolica < diastolica){
+                continue;
+            }
+
+            presiones[i] = sistolica;
+            presiones[i + 1] = diastolica;
+            i += 2;
+
         }
+
 
         System.out.println("\n1.Sistólica Máxima");
         System.out.println("2.Diastólica Mínima");
@@ -54,15 +89,33 @@ public class UT3Problema1 {
                         System.out.println(diastolicaMin);
                         break;
                     case 3:
-                        for (int j = 0; j < presiones.length; j += 2) {
-                            tensionCompensadaSiastolica = tensionCompensadaSiastolica + presiones[j];
+                        int indexcompensada = -1;
+                        if (i >= 2){
+                            double siastolicaInicial = presiones[0];
+                            double diastolicaInicial = presiones[1];
+                            double diferenciaInicial = Math.abs(siastolicaInicial - (2 * diastolicaInicial));
+
+                            double minDiferencia = diferenciaInicial;
+
+                            for (int j = 2; j < presiones.length; j += 2) {
+                                tensionCompensadaSiastolica = presiones[j];
+                                tensionCompensadaDiastolica = presiones[j + 1];
+
+                                tensionCompensada = Math.abs(tensionCompensadaSiastolica -(2 * tensionCompensadaDiastolica));
+
+                                if (tensionCompensada < minDiferencia){
+                                    minDiferencia = tensionCompensada;
+                                    indexcompensada = j;
+                                }
+                            }
+                                tensionCompensadaSiastolica = presiones[indexcompensada];
+                                tensionCompensadaDiastolica = presiones[indexcompensada + 1];
+                                System.out.printf("Medición más compensada Siastolica: %.2f Diastolica: %.2f \n", tensionCompensadaSiastolica, tensionCompensadaDiastolica);
+
+                        } else {
+                            System.out.println("No se encontraron mediciones válidas\n");
                         }
 
-                        for (int j = 1; j < presiones.length; j += 2) {
-                            tensionCompensadaDiastolica = tensionCompensadaDiastolica + presiones[j];
-                            tensionCompensada = Math.abs(tensionCompensadaSiastolica - (tensionCompensadaDiastolica * 2));
-                            System.out.println(tensionCompensada);
-                        }
                         break;
                     case 4:
 
