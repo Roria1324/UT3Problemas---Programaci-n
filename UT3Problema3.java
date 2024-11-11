@@ -26,6 +26,7 @@ public class UT3Prolema3 {
         int[] cantidadCerosPorFila = new int[matriz.length];
         int[] cantidadUnosPorColumna = new int[matriz.length];
         int[] cantidadCerosPorColumna = new int[matriz.length];
+        
         for (int i = 0; i < matriz.length; i++) {
             contadorLineaUno = 0;
             contadorColumnaUno = 0;
@@ -80,6 +81,7 @@ public class UT3Prolema3 {
             if (contadorColumnaUno > maxUnoColumna) {
                 maxUnoColumna = contadorColumnaUno;
             }
+            
             if (contadorColumnaCero > maxCerosColumna) {
                 maxCerosColumna = contadorColumnaCero;
             }
@@ -124,9 +126,6 @@ public class UT3Prolema3 {
             }
         }
         
-        if (!unosMaxLinea) {
-            System.out.println("-No hay filas con la mayor cantidad de unos repetida.");
-        }
         
         for (int i = 0; i < cantidadCerosPorFila.length; i++) {
             if (cantidadCerosPorFila[i] == maxCerosLineas) { 
@@ -139,9 +138,7 @@ public class UT3Prolema3 {
             }
         }
         
-        if (!cerosMaxLinea) {
-            System.out.println("-No hay filas con la mayor cantidad de ceros repetida.");
-        }
+ 
         for (int i = 0; i < cantidadUnosPorColumna.length; i++) {
             if (cantidadUnosPorColumna[i] == maxUnoColumna) { 
                 for (int j = i + 1; j < cantidadUnosPorColumna.length; j++) {
@@ -152,10 +149,7 @@ public class UT3Prolema3 {
                 }
             }
         }
-        
-        if (!unosMaxColumna) {
-            System.out.println("-No hay columnas con la mayor cantidad de unos repetida.");
-        }
+    
         
         for (int i = 0; i < cantidadCerosPorColumna.length; i++) {
             if (cantidadCerosPorColumna[i] == maxCerosColumna) { 
@@ -166,10 +160,6 @@ public class UT3Prolema3 {
                     }
                 }
             }
-        }
-        
-        if (!cerosMaxColumna) {
-            System.out.println("-No hay columnas con la mayor cantidad de ceros repetida.");
         }
 
         int diagonalInversa = matriz.length, lineaUnoSec = 0, lineaCeroSec = 0;
